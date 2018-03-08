@@ -1245,7 +1245,7 @@ var Lightbox = function (_Component) {
 						{ className: aphrodite.css(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
 						imageLoaded && this.renderHeader(),
 						this.renderImages(),
-						this.renderSpinner(),
+						this.props.displaySpinner && this.renderSpinner(),
 						imageLoaded && this.renderFooter()
 					),
 					imageLoaded && this.renderThumbnails(),
@@ -1274,23 +1274,28 @@ var Lightbox = function (_Component) {
 
 			var thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
 			var heightOffset = this.theme.header.height + this.theme.footer.height + thumbnailsSize + this.theme.container.gutter.vertical + 'px';
-
-			return React__default.createElement(
-				'figure',
-				{ className: aphrodite.css(this.classes.figure) },
-				React__default.createElement('img', {
-					className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded),
-					onClick: onClickImage,
-					sizes: sizes,
-					alt: image.alt,
-					src: image.src,
-					srcSet: sourceSet,
-					style: {
-						cursor: onClickImage ? 'pointer' : 'auto',
-						maxHeight: 'calc(100vh - ' + heightOffset + ')'
-					}
-				})
-			);
+			if (image.youTube === '') {
+				return React__default.createElement(
+					'figure',
+					{ className: aphrodite.css(this.classes.figure) },
+					React__default.createElement('img', {
+						className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded),
+						onClick: onClickImage,
+						sizes: sizes,
+						alt: image.alt,
+						src: image.src,
+						srcSet: sourceSet,
+						style: {
+							cursor: onClickImage ? 'pointer' : 'auto',
+							maxHeight: 'calc(100vh - ' + heightOffset + ')'
+						}
+					})
+				);
+			} else {
+				var src = 'https://www.youtube.com/embed/' + image.youTube;
+				var style = image.style || {};
+				return React__default.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+			}
 		}
 	}, {
 		key: 'renderThumbnails',
@@ -1383,6 +1388,7 @@ var Lightbox = function (_Component) {
 }(React.Component);
 
 Lightbox.propTypes = {
+	displaySpinner: PropTypes.bool,
 	backdropClosesModal: PropTypes.bool,
 	closeButtonTitle: PropTypes.string,
 	currentImage: PropTypes.number,

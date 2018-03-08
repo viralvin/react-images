@@ -233,7 +233,9 @@ class Lightbox extends Component {
 					<div className={css(this.classes.content)} style={{ marginBottom: offsetThumbnails, maxWidth: width }}>
 						{imageLoaded && this.renderHeader()}
 						{this.renderImages()}
-						{this.renderSpinner()}
+						{this.props.displaySpinner && 
+						this.renderSpinner()
+						}
 						{imageLoaded && this.renderFooter()}
 					</div>
 					{imageLoaded && this.renderThumbnails()}
@@ -263,7 +265,7 @@ class Lightbox extends Component {
 		const thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
 		const heightOffset = `${this.theme.header.height + this.theme.footer.height + thumbnailsSize
 			+ (this.theme.container.gutter.vertical)}px`;
-
+    if (image.youTube === '') {
 		return (
 			<figure className={css(this.classes.figure)}>
 				{/*
@@ -284,7 +286,13 @@ class Lightbox extends Component {
 					}}
 				/>
 			</figure>
-		);
+		)} else {
+			let src = 'https://www.youtube.com/embed/' +image.youTube
+			let style = image.style || {}
+			return (
+				<iframe src={src} style={style} allowfullscreen={true} />
+			)
+		}
 	}
 	renderThumbnails () {
 		const { images, currentImage, onClickThumbnail, showThumbnails, thumbnailOffset } = this.props;
@@ -366,6 +374,7 @@ class Lightbox extends Component {
 }
 
 Lightbox.propTypes = {
+  displaySpinner: PropTypes.bool,
 	backdropClosesModal: PropTypes.bool,
 	closeButtonTitle: PropTypes.string,
 	currentImage: PropTypes.number,

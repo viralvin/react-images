@@ -16,6 +16,7 @@ import bindFunctions from './utils/bindFunctions';
 import canUseDom from './utils/canUseDom';
 import deepMerge from './utils/deepMerge';
 
+import ReactPlayer from 'react-player'
 // consumers sometimes provide incorrect type or casing
 function normalizeSourceSet (data) {
 	const sourceSet = data.srcSet || data.srcset;
@@ -233,9 +234,7 @@ class Lightbox extends Component {
 					<div className={css(this.classes.content)} style={{ marginBottom: offsetThumbnails, maxWidth: width }}>
 						{imageLoaded && this.renderHeader()}
 						{this.renderImages()}
-						{this.props.displaySpinner && 
-						this.renderSpinner()
-						}
+						{this.renderSpinner()}
 						{imageLoaded && this.renderFooter()}
 					</div>
 					{imageLoaded && this.renderThumbnails()}
@@ -288,9 +287,8 @@ class Lightbox extends Component {
 			</figure>
 		)} else {
 			let src = 'https://www.youtube.com/embed/' +image.youTube
-			let style = image.style || {}
-			return (
-				<iframe src={src} style={style} allowfullscreen={true} />
+			return(
+				<ReactPlayer url={src} loop={true} />
 			)
 		}
 	}
@@ -350,19 +348,27 @@ class Lightbox extends Component {
 			spinner,
 			spinnerColor,
 			spinnerSize,
+			displaySpinner
 		} = this.props;
 
 		const { imageLoaded } = this.state;
 		const Spinner = spinner;
-
-		return (
-			<div className={css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive)}>
-				<Spinner
-					color={spinnerColor}
-					size={spinnerSize}
-				/>
-			</div>
-		);
+		
+		if (displaySpinner) {
+			return (
+				<div className={css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive)}>
+					<Spinner
+						color={spinnerColor}
+						size={spinnerSize}
+					/>
+				</div>
+			)
+		} else {
+			return (
+				<div style={{display: 'none'}} />
+			)
+		}
+;
 	}
 	render () {
 		return (

@@ -1,12 +1,13 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom'], factory) :
-	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM));
-}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom'), require('react-player')) :
+	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom', 'react-player'], factory) :
+	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM,global.ReactPlayer));
+}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom,ReactPlayer) { 'use strict';
 
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 var React__default = 'default' in React ? React['default'] : React;
 ScrollLock = ScrollLock && ScrollLock.hasOwnProperty('default') ? ScrollLock['default'] : ScrollLock;
+ReactPlayer = ReactPlayer && ReactPlayer.hasOwnProperty('default') ? ReactPlayer['default'] : ReactPlayer;
 
 // ==============================
 // THEME
@@ -1245,7 +1246,7 @@ var Lightbox = function (_Component) {
 						{ className: aphrodite.css(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
 						imageLoaded && this.renderHeader(),
 						this.renderImages(),
-						this.props.displaySpinner && this.renderSpinner(),
+						this.renderSpinner(),
 						imageLoaded && this.renderFooter()
 					),
 					imageLoaded && this.renderThumbnails(),
@@ -1293,8 +1294,7 @@ var Lightbox = function (_Component) {
 				);
 			} else {
 				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React__default.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React__default.createElement(ReactPlayer, { url: src, loop: true });
 			}
 		}
 	}, {
@@ -1360,19 +1360,25 @@ var Lightbox = function (_Component) {
 			var _props7 = this.props,
 			    spinner = _props7.spinner,
 			    spinnerColor = _props7.spinnerColor,
-			    spinnerSize = _props7.spinnerSize;
+			    spinnerSize = _props7.spinnerSize,
+			    displaySpinner = _props7.displaySpinner;
 			var imageLoaded = this.state.imageLoaded;
 
 			var Spinner$$1 = spinner;
 
-			return React__default.createElement(
-				'div',
-				{ className: aphrodite.css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
-				React__default.createElement(Spinner$$1, {
-					color: spinnerColor,
-					size: spinnerSize
-				})
-			);
+			if (displaySpinner) {
+				return React__default.createElement(
+					'div',
+					{ className: aphrodite.css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
+					React__default.createElement(Spinner$$1, {
+						color: spinnerColor,
+						size: spinnerSize
+					})
+				);
+			} else {
+				return React__default.createElement('div', { style: { display: 'none' } });
+			}
+			
 		}
 	}, {
 		key: 'render',

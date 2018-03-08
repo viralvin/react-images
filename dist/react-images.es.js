@@ -5,6 +5,7 @@ import ScrollLock from 'react-scrolllock';
 import { StyleSheet as StyleSheet$1, css as css$1 } from 'aphrodite/no-important';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { render, unmountComponentAtNode } from 'react-dom';
+import ReactPlayer from 'react-player';
 
 // ==============================
 // THEME
@@ -1243,7 +1244,7 @@ var Lightbox = function (_Component) {
 						{ className: css(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
 						imageLoaded && this.renderHeader(),
 						this.renderImages(),
-						this.props.displaySpinner && this.renderSpinner(),
+						this.renderSpinner(),
 						imageLoaded && this.renderFooter()
 					),
 					imageLoaded && this.renderThumbnails(),
@@ -1291,8 +1292,7 @@ var Lightbox = function (_Component) {
 				);
 			} else {
 				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React.createElement(ReactPlayer, { url: src, loop: true });
 			}
 		}
 	}, {
@@ -1358,19 +1358,25 @@ var Lightbox = function (_Component) {
 			var _props7 = this.props,
 			    spinner = _props7.spinner,
 			    spinnerColor = _props7.spinnerColor,
-			    spinnerSize = _props7.spinnerSize;
+			    spinnerSize = _props7.spinnerSize,
+			    displaySpinner = _props7.displaySpinner;
 			var imageLoaded = this.state.imageLoaded;
 
 			var Spinner$$1 = spinner;
 
-			return React.createElement(
-				'div',
-				{ className: css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
-				React.createElement(Spinner$$1, {
-					color: spinnerColor,
-					size: spinnerSize
-				})
-			);
+			if (displaySpinner) {
+				return React.createElement(
+					'div',
+					{ className: css(this.classes.spinner, !imageLoaded && this.classes.spinnerActive) },
+					React.createElement(Spinner$$1, {
+						color: spinnerColor,
+						size: spinnerSize
+					})
+				);
+			} else {
+				return React.createElement('div', { style: { display: 'none' } });
+			}
+			
 		}
 	}, {
 		key: 'render',

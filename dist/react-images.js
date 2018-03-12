@@ -468,7 +468,10 @@ function Footer(_ref, _ref2) {
 		countTotal
 	) : React__default.createElement('span', null);
 
-	var doesCaptionHaveHTML = caption.indexOf('<') > -1;
+	var doesCaptionHaveHTML = false;
+	if (caption !== undefined && caption.indexOf('<' > -1)) {
+		doesCaptionHaveHTML = true;
+	}
 
 	if (doesCaptionHaveHTML) {
 		return React__default.createElement(

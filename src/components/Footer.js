@@ -26,7 +26,10 @@ function Footer ({
 		</div>)
     : <span />;
     
-  const doesCaptionHaveHTML = (caption.indexOf('<') > -1)
+  let doesCaptionHaveHTML = false
+  if (caption !== undefined && caption.indexOf('<' > -1)) {
+    doesCaptionHaveHTML = true
+  }
 
   if (doesCaptionHaveHTML) {
     return (

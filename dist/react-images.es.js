@@ -6,6 +6,7 @@ import { StyleSheet as StyleSheet$1, css as css$1 } from 'aphrodite/no-important
 import { CSSTransitionGroup } from 'react-transition-group';
 import { render, unmountComponentAtNode } from 'react-dom';
 import YouTube from 'react-youtube';
+import 'babel-polyfill';
 
 // ==============================
 // THEME

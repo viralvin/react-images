@@ -15,6 +15,8 @@ import YouTube from 'react-youtube'
 import bindFunctions from './utils/bindFunctions';
 import canUseDom from './utils/canUseDom';
 import deepMerge from './utils/deepMerge';
+import "babel-polyfill";
+
 
 // consumers sometimes provide incorrect type or casing
 function normalizeSourceSet (data) {

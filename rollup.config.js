@@ -13,7 +13,8 @@ const globals = {
   'aphrodite/no-important': 'aphrodite',
   'react-scrolllock': 'ScrollLock',
   'react-transition-group': 'ReactTransitionGroup',
-  'react-spinners': 'BounceLoader'
+  'react-spinners': 'BounceLoader',
+  'react-youtube': 'YouTube',
 };
 const external = Object.keys(globals);
 const babelOptions = (production) => {

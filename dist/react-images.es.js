@@ -5,6 +5,7 @@ import ScrollLock from 'react-scrolllock';
 import { StyleSheet as StyleSheet$1, css as css$1 } from 'aphrodite/no-important';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { render, unmountComponentAtNode } from 'react-dom';
+import YouTube from 'react-youtube';
 
 // ==============================
 // THEME
@@ -1290,9 +1291,7 @@ var Lightbox = function (_Component) {
 					})
 				);
 			} else {
-				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React.createElement(YouTube, { videoId: image.youTube });
 			}
 		}
 	}, {

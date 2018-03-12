@@ -11,7 +11,7 @@ import Header from './components/Header';
 import PaginatedThumbnails from './components/PaginatedThumbnails';
 import Portal from './components/Portal';
 import DefaultSpinner from './components/Spinner';
-
+import YouTube from 'react-youtube'
 import bindFunctions from './utils/bindFunctions';
 import canUseDom from './utils/canUseDom';
 import deepMerge from './utils/deepMerge';
@@ -26,6 +26,7 @@ function normalizeSourceSet (data) {
 
 	return sourceSet;
 }
+
 
 class Lightbox extends Component {
 	constructor (props) {
@@ -290,7 +291,7 @@ class Lightbox extends Component {
 			let src = 'https://www.youtube.com/embed/' +image.youTube
 			let style = image.style || {}
 			return (
-				<iframe src={src} style={style} allowfullscreen={true} />
+				<YouTube videoId={image.youTube} />
 			)
 		}
 	}

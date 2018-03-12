@@ -1,12 +1,13 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom'], factory) :
-	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM));
-}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom'), require('react-youtube')) :
+	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom', 'react-youtube'], factory) :
+	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM,global.YouTube));
+}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom,YouTube) { 'use strict';
 
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 var React__default = 'default' in React ? React['default'] : React;
 ScrollLock = ScrollLock && ScrollLock.hasOwnProperty('default') ? ScrollLock['default'] : ScrollLock;
+YouTube = YouTube && YouTube.hasOwnProperty('default') ? YouTube['default'] : YouTube;
 
 // ==============================
 // THEME
@@ -1292,9 +1293,7 @@ var Lightbox = function (_Component) {
 					})
 				);
 			} else {
-				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React__default.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React__default.createElement(YouTube, { videoId: image.youTube });
 			}
 		}
 	}, {

@@ -24,18 +24,29 @@ function Footer ({
 			{countSeparator}
 			{countTotal}
 		</div>)
-		: <span />;
+    : <span />;
+    
+  const doesCaptionHaveHTML = (caption.indexOf('<') > -1)
 
-	return (
-		<div className={css(classes.footer)} {...props}>
-			{caption ? (
-				<figcaption className={css(classes.footerCaption)}>
-					{caption}
-				</figcaption>
-			) : <span />}
-			{imageCount}
-		</div>
-	);
+  if (doesCaptionHaveHTML) {
+    return (
+      <div className={css(classes.footer)} {...props}>
+      <figcaption className={css(classes.footerCaption)} dangerouslySetInnerHTML={{__html: caption}}/>
+      </div>
+    )
+  } else {
+    return (
+      <div className={css(classes.footer)} {...props}>
+        {caption ? (
+          <figcaption className={css(classes.footerCaption)}>
+            {caption}
+          </figcaption>
+        ) : <span />}
+        {imageCount}
+      </div>
+    );
+  }
+
 }
 
 Footer.propTypes = {

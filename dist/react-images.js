@@ -468,16 +468,26 @@ function Footer(_ref, _ref2) {
 		countTotal
 	) : React__default.createElement('span', null);
 
-	return React__default.createElement(
-		'div',
-		_extends({ className: noImportant.css(classes.footer) }, props),
-		caption ? React__default.createElement(
-			'figcaption',
-			{ className: noImportant.css(classes.footerCaption) },
-			caption
-		) : React__default.createElement('span', null),
-		imageCount
-	);
+	var doesCaptionHaveHTML = caption.indexOf('<') > -1;
+
+	if (doesCaptionHaveHTML) {
+		return React__default.createElement(
+			'div',
+			_extends({ className: noImportant.css(classes.footer) }, props),
+			React__default.createElement('figcaption', { className: noImportant.css(classes.footerCaption), dangerouslySetInnerHTML: { __html: caption } })
+		);
+	} else {
+		return React__default.createElement(
+			'div',
+			_extends({ className: noImportant.css(classes.footer) }, props),
+			caption ? React__default.createElement(
+				'figcaption',
+				{ className: noImportant.css(classes.footerCaption) },
+				caption
+			) : React__default.createElement('span', null),
+			imageCount
+		);
+	}
 }
 
 Footer.propTypes = {

@@ -1,12 +1,13 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom'], factory) :
-	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM));
-}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('aphrodite'), require('react-scrolllock'), require('aphrodite/no-important'), require('react-transition-group'), require('react-dom'), require('react-youtube')) :
+	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'aphrodite', 'react-scrolllock', 'aphrodite/no-important', 'react-transition-group', 'react-dom', 'react-youtube'], factory) :
+	(global.Lightbox = factory(global.PropTypes,global.React,global.aphrodite,global.ScrollLock,global.aphrodite,global.ReactTransitionGroup,global.ReactDOM,global.YouTube));
+}(this, (function (PropTypes,React,aphrodite,ScrollLock,noImportant,reactTransitionGroup,reactDom,YouTube) { 'use strict';
 
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 var React__default = 'default' in React ? React['default'] : React;
 ScrollLock = ScrollLock && ScrollLock.hasOwnProperty('default') ? ScrollLock['default'] : ScrollLock;
+YouTube = YouTube && YouTube.hasOwnProperty('default') ? YouTube['default'] : YouTube;
 
 // ==============================
 // THEME
@@ -467,16 +468,29 @@ function Footer(_ref, _ref2) {
 		countTotal
 	) : React__default.createElement('span', null);
 
-	return React__default.createElement(
-		'div',
-		_extends({ className: noImportant.css(classes.footer) }, props),
-		caption ? React__default.createElement(
-			'figcaption',
-			{ className: noImportant.css(classes.footerCaption) },
-			caption
-		) : React__default.createElement('span', null),
-		imageCount
-	);
+	var doesCaptionHaveHTML = false;
+	if (caption !== undefined && caption.indexOf('<' > -1)) {
+		doesCaptionHaveHTML = true;
+	}
+
+	if (doesCaptionHaveHTML) {
+		return React__default.createElement(
+			'div',
+			_extends({ className: noImportant.css(classes.footer) }, props),
+			React__default.createElement('figcaption', { className: noImportant.css(classes.footerCaption), dangerouslySetInnerHTML: { __html: caption } })
+		);
+	} else {
+		return React__default.createElement(
+			'div',
+			_extends({ className: noImportant.css(classes.footer) }, props),
+			caption ? React__default.createElement(
+				'figcaption',
+				{ className: noImportant.css(classes.footerCaption) },
+				caption
+			) : React__default.createElement('span', null),
+			imageCount
+		);
+	}
 }
 
 Footer.propTypes = {
@@ -996,6 +1010,35 @@ function bindFunctions(functions) {
 
 var canUseDom = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
+"use strict";
+
+require("core-js/shim");
+
+require("regenerator-runtime/runtime");
+
+require("core-js/fn/regexp/escape");
+
+if (global._babelPolyfill) {
+  throw new Error("only one instance of babel-polyfill is allowed");
+}
+global._babelPolyfill = true;
+
+var DEFINE_PROPERTY = "defineProperty";
+function define(O, key, value) {
+  O[key] || Object[DEFINE_PROPERTY](O, key, {
+    writable: true,
+    configurable: true,
+    value: value
+  });
+}
+
+define(String.prototype, "padLeft", "".padStart);
+define(String.prototype, "padRight", "".padEnd);
+
+"pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
+  [][key] && define(Array, key, Function.call.bind([][key]));
+});
+
 // consumers sometimes provide incorrect type or casing
 function normalizeSourceSet(data) {
 	var sourceSet = data.srcSet || data.srcset;
@@ -1292,9 +1335,7 @@ var Lightbox = function (_Component) {
 					})
 				);
 			} else {
-				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React__default.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React__default.createElement(YouTube, { videoId: image.youTube });
 			}
 		}
 	}, {

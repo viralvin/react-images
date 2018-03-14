@@ -5,6 +5,8 @@ import ScrollLock from 'react-scrolllock';
 import { StyleSheet as StyleSheet$1, css as css$1 } from 'aphrodite/no-important';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { render, unmountComponentAtNode } from 'react-dom';
+import YouTube from 'react-youtube';
+import 'babel-polyfill';
 
 // ==============================
 // THEME
@@ -465,16 +467,29 @@ function Footer(_ref, _ref2) {
 		countTotal
 	) : React.createElement('span', null);
 
-	return React.createElement(
-		'div',
-		_extends({ className: css$1(classes.footer) }, props),
-		caption ? React.createElement(
-			'figcaption',
-			{ className: css$1(classes.footerCaption) },
-			caption
-		) : React.createElement('span', null),
-		imageCount
-	);
+	var doesCaptionHaveHTML = false;
+	if (caption !== undefined && caption.indexOf('<' > -1)) {
+		doesCaptionHaveHTML = true;
+	}
+
+	if (doesCaptionHaveHTML) {
+		return React.createElement(
+			'div',
+			_extends({ className: css$1(classes.footer) }, props),
+			React.createElement('figcaption', { className: css$1(classes.footerCaption), dangerouslySetInnerHTML: { __html: caption } })
+		);
+	} else {
+		return React.createElement(
+			'div',
+			_extends({ className: css$1(classes.footer) }, props),
+			caption ? React.createElement(
+				'figcaption',
+				{ className: css$1(classes.footerCaption) },
+				caption
+			) : React.createElement('span', null),
+			imageCount
+		);
+	}
 }
 
 Footer.propTypes = {
@@ -1290,9 +1305,7 @@ var Lightbox = function (_Component) {
 					})
 				);
 			} else {
-				var src = 'https://www.youtube.com/embed/' + image.youTube;
-				var style = image.style || {};
-				return React.createElement('iframe', { src: src, style: style, allowfullscreen: true });
+				return React.createElement(YouTube, { videoId: image.youTube });
 			}
 		}
 	}, {

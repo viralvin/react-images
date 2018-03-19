@@ -11,7 +11,7 @@ import Header from './components/Header';
 import PaginatedThumbnails from './components/PaginatedThumbnails';
 import Portal from './components/Portal';
 import DefaultSpinner from './components/Spinner';
-import YouTube from './node_modules/react-youtube'
+import YouTube from 'react-youtube'
 import bindFunctions from './utils/bindFunctions';
 import canUseDom from './utils/canUseDom';
 import deepMerge from './utils/deepMerge';

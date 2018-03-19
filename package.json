@@ -1,6 +1,6 @@
 {
   "name": "@woodlanddirect/react-images-woodland",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A fork of jossmac/react-images to fit our specific woodland needs",
   "main": "lib/Lightbox.js",
   "jsnext:main": "dist/react-images.es.js",

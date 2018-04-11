@@ -5,7 +5,7 @@ module.exports = {
   context: __dirname,
   devtool: debug ? 'inline-sourcemap' : false,
   entry: {
-    header: './src/Lightbox.js'
+    Lightbox: './src/Lightbox.js'
   },
   module: {
     rules: [

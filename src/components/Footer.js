@@ -34,7 +34,7 @@ function Footer ({
   if (doesCaptionHaveHTML) {
     return (
       <div className={css(classes.footer)} {...props}>
-      <figcaption className={css(classes.footerCaption)} dangerouslySetInnerHTML={{__html: caption}}/>
+      <figcaption className={css(classes.footerCaption)} style={{marginLeft: '10%'}}dangerouslySetInnerHTML={{__html: caption}}/>
       </div>
     )
   } else {

@@ -477,7 +477,7 @@ function Footer(_ref, _ref2) {
 		return React__default.createElement(
 			'div',
 			_extends({ className: noImportant.css(classes.footer) }, props),
-			React__default.createElement('figcaption', { className: noImportant.css(classes.footerCaption), dangerouslySetInnerHTML: { __html: caption } })
+			React__default.createElement('figcaption', { className: noImportant.css(classes.footerCaption), style: { marginLeft: '10%' }, dangerouslySetInnerHTML: { __html: caption } })
 		);
 	} else {
 		return React__default.createElement(

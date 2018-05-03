@@ -292,7 +292,14 @@ class Lightbox extends Component {
 			let src = 'https://www.youtube.com/embed/' +image.youTube
 			let style = image.style || {}
 			return (
-				<YouTube videoId={image.youTube} />
+        <figure className={css(this.classes.figure)}>
+        <YouTube videoId={image.youTube} 
+          id={'youtube-video-woodland'}
+        opts={{
+          cursor: onClickImage ? 'pointer' : 'auto',
+          maxHeight: `calc(100vh - ${heightOffset})`,
+        }}/>
+        </figure>
 			)
 		}
 	}
